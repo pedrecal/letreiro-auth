@@ -1,0 +1,19 @@
+<!doctype html>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>letreiro</title>
+<style>body{font:16px system-ui,sans-serif;background:#0e0e10;color:#f5f4f0;display:grid;place-items:center;min-height:90vh;margin:0;padding:16px;text-align:center}a{color:#1ed760}</style>
+<p id="msg">Voltando para o letreiro…</p>
+<script>
+// Spotify only redirects to HTTPS (or loopback), and the device speaks plain
+// HTTP on the LAN. The device puts its own address in `state`
+// ("<ip>~<nonce>"); this page forwards the whole query string to it.
+const q = new URLSearchParams(location.search);
+const ip = (q.get("state") || "").split("~")[0];
+if (/^\d{1,3}(\.\d{1,3}){3}$/.test(ip)) {
+  location.replace(`http://${ip}/callback${location.search}`);
+} else {
+  document.getElementById("msg").textContent =
+    "Link inválido. Escaneie o QR code do letreiro de novo.";
+}
+</script>
